@@ -1,0 +1,11 @@
+﻿@model HandleErrorInfo
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/All_LayoutPage.cshtml";
+}
+
+<h2 style="color:red">Error, we encountered an error. Please try again!</h2>
+<h5>Action: @Model.ActionName</h5>
+<h5>Controller: @Model.ControllerName</h5>
+<h5>Message: @Model.Exception.Message</h5>
+

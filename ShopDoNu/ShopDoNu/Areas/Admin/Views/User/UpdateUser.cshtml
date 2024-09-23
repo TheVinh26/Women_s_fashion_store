@@ -1,0 +1,36 @@
+﻿@model ShopDoNu.Identity.AppUser
+
+@{
+    ViewBag.Title = "Update User";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_LayoutPage.cshtml";
+}
+@using (Html.BeginForm("UpdateUser", "User", new { area = "Admin" }, FormMethod.Post))
+{
+    @Html.HiddenFor(i => i.Id)
+    <div class="form-group">
+        @Html.LabelFor(i => i.UserName, "UserName")
+        @Html.TextBoxFor(i => i.UserName, new { placeholder = "UserName", @class = "form-control", value = ViewBag.Name })
+        @Html.ValidationMessageFor(i => i.UserName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(i => i.Email, "Email")
+        @Html.TextBoxFor(i => i.Email, new { placeholder = "Email", @class = "form-control", value = ViewBag.Email })
+        @Html.ValidationMessageFor(i => i.Email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(i => i.PhoneNumber, "Phone Number")
+        @Html.TextBoxFor(i => i.PhoneNumber, new { placeholder = "Phone Number", @class = "form-control", value = ViewBag.PhoneNumber })
+        @Html.ValidationMessageFor(i => i.PhoneNumber)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(i => i.Address, "Address")
+        @Html.TextBoxFor(i => i.Address, new { placeholder = "Address", @class = "form-control", value = ViewBag.Address })
+        @Html.ValidationMessageFor(i => i.Address)
+    </div>
+    <br />
+    <div align="center">
+        <button type="submit" class="btn" style="width:75px">Update </button>
+        <a href="/Admin/User" class="btn" style="width:75px">Cancel</a>
+    </div>
+}
+

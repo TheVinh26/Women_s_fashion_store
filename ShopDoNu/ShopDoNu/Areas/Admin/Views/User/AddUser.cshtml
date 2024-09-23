@@ -1,0 +1,51 @@
+﻿@*@model ShopDoNu.Identity.AppUser*@
+@model ShopDoNu.ViewModel.RegisterVM
+@{
+    ViewBag.Title = "Insert User";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_LayoutPage.cshtml";
+}
+<h2 class="title">Add User</h2>
+@using (Html.BeginForm("AddUser", "User", new { area = "Admin" }, FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(i => i.Email, "Email")
+        @Html.TextBoxFor(i => i.Email, new { placeholder = "Email", @class = "form-control" })
+        @Html.ValidationMessageFor(temp => temp.Email)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(i => i.Username, "UserName")
+        @Html.TextBoxFor(i => i.Username, new { placeholder = "UserName", @class = "form-control" })
+        @Html.ValidationMessageFor(i => i.Username)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(i => i.Password, "Password")
+        @Html.TextBoxFor(i => i.Password, new { placeholder = "Password", @class = "form-control", type = "password" })
+        @Html.ValidationMessageFor(i => i.Password)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(i => i.Password, "ConfirmPassword")
+        @Html.TextBoxFor(i => i.ConfirmPassword, new { placeholder = "Nhập lại mật khẩu", type = "password" })
+        @Html.ValidationMessageFor(i => i.ConfirmPassword)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(i => i.PhoneNumber, "PhoneNumber")
+        @Html.TextBoxFor(i => i.PhoneNumber, new { placeholder = "Phone Number" })
+        @Html.ValidationMessageFor(i => i.PhoneNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(i => i.Address, "Address")
+        @Html.TextBoxFor(i => i.Address, new { placeholder = "Address" })
+        @Html.ValidationMessageFor(i => i.Address)
+    </div>
+
+    <br />
+    <div align="center">
+        <button type="submit" class="btn" style="width:75px">Add </button>
+        <a href="/Admin/User" class="btn" style="width:75px">Cancel</a>
+    </div>
+}

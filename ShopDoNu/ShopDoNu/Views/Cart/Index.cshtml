@@ -1,0 +1,149 @@
+﻿@model List<ShopDoNu.Models.Cart>
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/All_LayoutPage.cshtml";
+}
+@{
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<div class="small-container cart-page">
+
+    <table>
+        <tr>
+            <th>Products</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        @foreach (var i in Model)
+        {
+            <tr data-cart-id="@i.Id">
+                <td>
+                    <div class="cart-info">
+                        <img src="~/Img/All/@i.Product.Img">
+                        <div>
+                            <p>@i.Product.Name</p>
+                            <small data-cart-id="@i.Id" data-price="@i.Product.Price">Price: @String.Format(format, "{0:c0}", i.Product.Price)</small>
+                            <a href="" class="delete-item">Delete</a>
+                        </div>
+                    </div>
+                </td>
+                <td><input type="number" value="@i.Quantity" min="1" class="form-control w-25" ></td>
+                <td class="total-row">0</td>
+            </tr>
+        }
+    </table>
+    <div class="total-price">
+        <table>
+            <tr>
+                <td>Total</td>
+                <td class="total-cart">0</td>
+            </tr>
+        </table>
+    </div><br>
+    <div class="pay">Pay</div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Thực hiện cập nhật tổng giá sản phẩm khi trang web được tải
+        updateTotals();
+
+        // Thay đổi giá hoặc số lượng
+        $('input[type="number"]').on('input', function () {
+            //var cartId = $(this).closest('tr').data('cart-id');
+            var cartId = $(this).closest('tr').find('small').data('cart-id');
+
+            var newQuantity = parseInt($(this).val());
+
+            // Kiểm tra xem newQuantity có phải là số không
+            if (!isNaN(newQuantity)) {
+                // Gửi yêu cầu Ajax để cập nhật số lượng
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("UpdateQuantity", "Cart")',
+                    data: { cartId: cartId, quantity: newQuantity },
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.success) {
+                            // Cập nhật tổng giá sản phẩm và tổng giá của giỏ hàng
+                            updateTotals();
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while processing your request.");
+                    }
+                });
+            } else {
+                alert("Invalid quantity input.");
+            }
+        });
+
+        $(".delete-item").click(function (e) {
+            e.preventDefault();
+
+            //var cartId = $(this).data("cart-id");
+            var cartId = $(this).closest('tr').data('cart-id');
+
+            var confirmDelete = confirm("Are you sure you want to delete this item?");
+            if (confirmDelete) {
+                // Ajax request to delete the item
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteCartItem", "Cart")",
+                    data: { cartId: cartId },
+                    success: function (result) {
+                        if (result.success) {
+                            // Remove the deleted row from the table
+                            $(`[data-cart-id="${cartId}"]`).closest("tr").remove();
+
+                            // Recalculate the total price
+                            updateTotals();
+                        } else {
+                            alert("Failed to delete item from the cart.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while processing your request.");
+                    }
+                });
+            }
+        });
+
+        //// Hàm cập nhật tổng giá sản phẩm
+        function updateTotals() {
+            var overallTotalPrice = 0;
+
+            // Loop through each row in the table
+            $("table tr:gt(0)").each(function () {
+                var quantity = parseInt($(this).find("input").val());
+                var price = parseFloat($(this).find("small").data("price"));
+
+                // Kiểm tra xem quantity và price có phải là số không
+                if (!isNaN(quantity) && !isNaN(price)) {
+                    var productTotal = quantity * price;
+
+                    // Update the total price for the current product in its row
+                    var formattedProductTotal = productTotal.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                    $(this).find(".total-row").text(formattedProductTotal);
+
+                    // Accumulate the product total to calculate the overall total
+                    overallTotalPrice += productTotal;
+                }
+            });
+
+            // Kiểm tra xem overallTotalPrice có phải là số không
+            if (!isNaN(overallTotalPrice)) {
+                // Update the overall total price in the "Total" cell
+                var formattedOverallTotal = overallTotalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                //$(".total-price td:last").text(formattedOverallTotal);
+                $(".total-cart").text(formattedOverallTotal);
+            }
+        }
+    });
+</script>
+
+
+

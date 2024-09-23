@@ -1,0 +1,93 @@
+﻿@model List<ShopDoNu.Models.Product>
+@{
+    ViewBag.Title = "Product Admin";
+}
+@{
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<!-- ----------Sản phẩm -------------- -->
+@using (Html.BeginForm("Index", "Product", new { area = "Admin"},FormMethod.Get))
+{
+    <div class="row">
+        <div class="col">
+            <p>Category</p>
+            <select class="form-select" id="chonsp" name="loai">
+                <option value="chonloai">Select Category</option>
+                <option value="dda">Đầm dáng A</option>
+                <option value="sm">Áo sơ mi</option>
+                <option value="ap">Áo phông</option>
+            </select>
+        </div>
+        <div class="col">
+            <p>Price</p>
+            <select class="form-select" id="chongia" name="sortPrice">
+                <option value="">Choose by price</option>
+                <option value="1">Under 500,000</option>
+                <option value="2">From 500,000 - 1 million</option>
+                <option value="3">From 1 million - 2 million</option>
+                <option value="4">Over 2 million</option>
+            </select>
+
+        </div>
+        <div class="col">
+            <button type="submit" class="btn">Filter products</button>
+        </div>
+    </div>
+}
+
+<!-- ----------Sản phẩm -------------- -->
+<div id="product-list">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-4">
+                <a href="/Admin/Product/Detail/@item.Id">
+                    @if (item.Img == "")
+                    {
+                        <img src="~/Img/All/Img-Err.png"/>
+                    }
+                    else
+                    {
+                        <img src="~/Img/All/@item.Img"/>
+                    }                   
+                </a>
+                <h4>@item.Name</h4>
+                <p><b>@String.Format(format, "{0:c0}", item.Price)</b></p>
+            </div>
+        }
+    </div>
+</div>
+@{
+    string search = ViewBag.Search;
+    string loai = ViewBag.Loai;
+    string sortPrice = ViewBag.SortPrice;
+    int page = ViewBag.Page;
+    int page_lui = ViewBag.Page - 1;
+
+    if (page_lui <= 0)
+    {
+        page_lui = 1;
+    }
+    int page_toi = ViewBag.Page + 1;
+    if (page_toi > ViewBag.So_luong_trang)
+    {
+        page_toi = ViewBag.So_luong_trang;
+    }
+    }
+    <div class="page-btn">
+        <a href="@Url.Action("Index","Product", new {area = "Admin" ,search, page = page_lui , loai, sortPrice})"><</a>
+
+        @for (int i = 0; i < ViewBag.So_luong_trang; i++)
+        {
+            if (i + 1 == ViewBag.Page)
+            {
+                <a style=" background-color: #ff523b; color: #fff" href="@Url.Action("Index", "Product", new {area = "Admin", page = i+1 , loai, sortPrice})"> @(i+1) </a>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "Product",new {area = "Admin" ,search, page = i + 1 , loai, sortPrice})"> @(i+1) </a>
+            }
+        }
+
+        <a href="@Url.Action("Index","Product", new {area = "Admin" ,search, page = page_toi , loai, sortPrice})">></a>
+    </div>

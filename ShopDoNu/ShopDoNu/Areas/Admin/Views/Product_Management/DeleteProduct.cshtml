@@ -1,0 +1,40 @@
+﻿@model ShopDoNu.Models.Product
+@{
+    ViewBag.Title = "Delete Product";
+}
+<h2 class="title">Delete Product</h2>
+@{
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+@using (Html.BeginForm("DeleteProduct", "Product_Management", new { area = "Admin", id = Model.Id }, FormMethod.Post))
+{
+    <input type="hidden" name="ID" value="@Model.Id" />
+    <table class="table">
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Categori Type
+            </th>
+            <th>
+                Image Product
+            </th>
+            <th>
+                Price Product
+            </th>
+        </tr>
+        <tr>
+            <td>@Model.Name</td>
+            <td>@Model.Category.Name</td>
+            <td> <img src="~/Img/All/@Model.Img" style="width: 50px" /></td>            
+            <td><b>@String.Format(format, "{0:c0}", Model.Price)</b></td>
+        </tr>
+        <tr>
+            <td><h2 style="color:red; text-align:center">Do you want to delete the product?</h2></td>
+            <td><button type="submit" class=" btn">Yes</button></td>
+            <td><a href="/Admin/Product_Management" class="btn">No</a></td>
+        </tr>
+    </table>
+}
+

@@ -1,0 +1,34 @@
+﻿@model ShopDoNu.ViewModel.LoginVM
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/All_LayoutPage.cshtml";
+}
+<div class="account-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <img src="/Img/blog1-master.jpg" width="100%">
+            </div>
+            <div class="col-2">
+                <div class="form-container">
+                    <div class="from-btn">
+                        <span>Login</span>
+                        <hr id="Indicator">
+                    </div>
+
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                    {
+                        @Html.TextBoxFor(temp => temp.Username, new { placeholder = "Username" })
+                        @Html.ValidationMessageFor(temp => temp.Username)
+
+                        @Html.TextBoxFor(temp => temp.Password, new { placeholder = "Pasword", type="password"})
+                        @Html.ValidationMessageFor(temp => temp.Password)
+                        <button type="submit" class="btn">Login</button>
+                        <a href="">Forgot password</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

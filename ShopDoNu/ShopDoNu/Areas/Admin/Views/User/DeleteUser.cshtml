@@ -1,0 +1,38 @@
+﻿@model ShopDoNu.Identity.AppUser
+
+@{
+    ViewBag.Title = "Delete User";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_LayoutPage.cshtml";
+}
+@using (Html.BeginForm("DeleteUser", "User", new { area = "Admin", id = Model.Id }, FormMethod.Post))
+{
+    @Html.HiddenFor(i => i.Id)
+    <table class="table">
+        <tr>
+            <th>
+                UserName
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Adress
+            </th>
+        </tr>
+        <tr>
+            <td>@Model.UserName</td>
+            <td>@Model.Email</td>
+            <td>@Model.PhoneNumber</td>
+            <td>@Model.Address</td>
+        </tr>
+        <tr>
+            <td><h2 style="color:red; text-align:center">Do you want to delete this user?</h2></td>
+            <td><button type="submit" class=" btn">Yes</button></td>
+            <td><a href="/Admin/User" class="btn">No</a></td>
+        </tr>
+    </table>
+}
+

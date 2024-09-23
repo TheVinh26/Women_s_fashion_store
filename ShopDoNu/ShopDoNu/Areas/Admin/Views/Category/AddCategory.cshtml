@@ -1,0 +1,23 @@
+﻿@model ShopDoNu.Models.Category
+
+@{
+    ViewBag.Title = "AddCategory";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_LayoutPage.cshtml";
+}
+
+@using (Html.BeginForm("AddCategory", "Category", new { area = "Admin" }, FormMethod.Post))
+{
+
+    <div class="form-group">
+        @Html.LabelFor(i => i.Name, "Category Name")
+        @Html.TextBoxFor(i => i.Name, new { placeholder = "Category Name", @class = "form-control" })
+        @Html.ValidationMessageFor(temp => temp.Name)
+    </div>
+    
+    <br />
+    <div align="center">
+        <button type="submit" class="btn" style="width:75px">Add </button>
+        <a href="/Admin/Category" class="btn" style="width:75px">Cancel</a>
+    </div>
+}
+

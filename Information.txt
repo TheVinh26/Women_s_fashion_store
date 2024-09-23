@@ -1,0 +1,6 @@
+Admin Account
+
+UserName: thevinhadmin
+Password: admin123
+ 
+Link web: http://shopdonu.somee.com

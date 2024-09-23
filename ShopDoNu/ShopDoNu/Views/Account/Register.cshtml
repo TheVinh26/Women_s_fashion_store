@@ -1,0 +1,46 @@
+﻿@model ShopDoNu.ViewModel.RegisterVM
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/All_LayoutPage.cshtml";
+}
+<div class="account-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <img src="/Img/blog1-master.jpg" width="100%">
+            </div>
+            <div class="col-2">
+                <div class="form-container">
+                    <div class="from-btn">
+                        <p>Register</p>
+                        <hr id="Indicator">
+                    </div>
+
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                    {
+                        @Html.TextBoxFor(temp => temp.Username, new { placeholder = "User Name" })
+                        @Html.ValidationMessageFor(temp => temp.Username)
+
+                        @Html.TextBoxFor(temp => temp.Password, new { placeholder = "Password", type = "password" })
+                        @Html.ValidationMessageFor(temp => temp.Password)
+
+                        @Html.TextBoxFor(temp => temp.ConfirmPassword, new { placeholder = "ConfirmPassword", type = "password" })
+                        @Html.ValidationMessageFor(temp => temp.ConfirmPassword)
+
+                        @Html.TextBoxFor(temp => temp.Email, new { placeholder = "Email" })
+                        @Html.ValidationMessageFor(temp => temp.Email)
+
+                        @Html.TextBoxFor(temp => temp.PhoneNumber, new { placeholder = "Phone Number" })
+                        @Html.ValidationMessageFor(temp => temp.PhoneNumber)
+
+                        @Html.TextBoxFor(temp => temp.Address, new { placeholder = "Address" })
+                        @Html.ValidationMessageFor(temp => temp.Address)
+                        <button type="submit" class="btn">Register</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

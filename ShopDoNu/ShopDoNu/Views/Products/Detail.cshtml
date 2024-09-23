@@ -1,0 +1,53 @@
+﻿@model ShopDoNu.Models.Product
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/All_LayoutPage.cshtml";
+}
+@{
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<div class="small-container single-product">
+    <div class="row">
+        <div class="col-2">
+            <img src="~/Img/All/@Model.Img" width="100%" id="ProductImg">
+        </div>
+        <div class="col-2">
+            <h2>@Model.Name</h2>
+            <h4>@String.Format(format, "{0:c0}", Model.Price)</h4>
+            Quantity <input type="number" id="quantityInput" value="1" min="1">
+            <a href="javascript:void(0);" id="addToCartBtn" class="btn">Add to cart</a>
+            <a href="" id="buy" class="btn">Buy now</a>
+            <h3>Detail product</h3>
+            <p>
+                @Model.Description
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#addToCartBtn").click(function () {
+            var productId = @Model.Id;
+            var quantity = $("#quantityInput").val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddToCart", "Cart")",
+                data: { productId: productId, quantity: quantity },
+                success: function (result) {
+                    if (result.success) {
+                        alert("Product added to cart successfully!");
+                    } else {
+                        alert("Failed to add product to cart.");
+                    }
+                },
+                error: function () {
+                    alert("An error occurred while processing your request.");
+                }
+            });
+        });
+    });
+</script>
+

@@ -1,0 +1,41 @@
+﻿@model List<ShopDoNu.Models.Product>
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/All_LayoutPage.cshtml";
+}
+
+@{
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+    <div class="row">
+        <div class="col-2">
+            <h1>Give your workout a new style!</h1>
+            <p>
+                Success is not always about greatness. It's about consistency, Consistent hard work will achieve success. Greatness will come.
+            </p>
+            <a href="/Products/index" class="btn">Explore now &#8594;</a>
+        </div>
+        <div class="col-2">
+            <div class="carousel">
+                <img src="~/Img/blog1-master.jpg" alt="">
+            </div>
+        </div>
+    </div>
+<!------products-------->
+<div id="product-list">
+    <h2 class="title">Outstanding product</h2>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-4">
+                <a href="/Products/Detail/@item.Id">
+                    <img src="~/Img/All/@item.Img">
+                </a>
+                <h4>@item.Name</h4>
+                <p><b>@String.Format(format, "{0:c0}", item.Price)</b></p>
+            </div>
+        }
+    </div>
+</div>

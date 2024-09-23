@@ -1,0 +1,65 @@
+﻿@model List<ShopDoNu.Models.Product>
+@{
+    ViewBag.Title = "Product Management";
+}
+@{
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<div class="row">
+    <div class="col-6">
+        <a href="/Admin/Product_Management/AddProduct" class="btn">Add product</a>
+    </div>
+    <div class="col-6">
+        <a href="/Admin/Category" class="btn">Category</a>
+    </div>
+</div>
+<h2 class="title">Product Management</h2>
+<table class="table">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Product type
+        </th>
+        <th>
+            Image product
+        </th>
+        <th>
+            Product Price
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    @{
+        int stt = 1;
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@stt</td>
+            <td>@item.Name</td>
+            <td>@item.Category.Name</td>
+            <td> 
+                @if(item.Img == "")
+                {
+                    <img src="~/Img/All/Img-Err.png" style="width: 50px" />
+                }
+                else{
+                    <img src="~/Img/All/@item.Img" style="width: 50px" />
+                }
+            </td>
+            <td>@String.Format(format, "{0:c0}", item.Price)</td>
+            <td>
+                <a href="/Admin/Product_Management/UpdateProduct/@item.Id" style="text-decoration:none">Update </a>|
+                <a href="/Admin/Product_Management/DeleteProduct/@item.Id" style="text-decoration:none">Delete </a>
+            </td>
+        </tr>
+        stt++;
+    }
+</table>
+

@@ -1,0 +1,49 @@
+﻿@model List<ShopDoNu.Identity.AppUser>
+
+@{
+    ViewBag.Title = "User Management";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_LayoutPage.cshtml";
+}
+<a href="/Admin/User/AddUser" class="btn">Add User</a>
+<h2 class="title">User Management</h2>
+<table class="table">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>
+            UserName
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Phone Number
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    @{
+        int stt = 1;
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@stt</td>
+            <td>@item.UserName</td>
+            <td>@item.Email</td>
+            <td>@item.PhoneNumber</td>
+            <td>@item.Address</td>
+            <td>
+                <a href="/Admin/User/UpdateUser/@item.Id" style="text-decoration:none">Update </a>|
+                <a href="/Admin/User/DeleteUser/@item.Id" style="text-decoration:none">Delete </a>
+            </td>
+        </tr>
+        stt++;
+    }
+</table>
+

@@ -1,0 +1,39 @@
+﻿@model ShopDoNu.Models.Product
+
+@{
+    ViewBag.Title = "Insert Product";
+}
+<h2 class="title">Add Product</h2>
+@using (Html.BeginForm("AddProduct", "Product_Management", new { area = "Admin"}, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="form-group">
+        @Html.LabelFor(i => i.Name, "Product Name")
+        @Html.TextBoxFor(i => i.Name, new { placeholder = "Product Name", @class = "form-control" })
+        @Html.ValidationMessageFor(temp => temp.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(i => i.Price, "Product Price")
+        @Html.TextBoxFor(i => i.Price, new { placeholder = "Product Price", @class = "form-control" , min = 0})
+        @Html.ValidationMessageFor(i => i.Price)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(temp => temp.Description, "Product Description") <br />
+        <textarea class="form-control" rows="5" cols="100" id="Description" name="Description" placeholder="Product Description"></textarea>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(i => i.Img, "Select image")
+        <input type="file" name="imageFile" id="imageFile" class="form-control">
+    </div>
+    <div class="form-select">
+        @Html.LabelFor(i => i.CategoryId, "Category Type")
+        @Html.DropDownListFor(i => i.CategoryId, new SelectList(ViewBag.Category, "Id", "Name"), "Please choose...", new { @class = "form-control" })
+        <br />
+        @Html.ValidationMessageFor(i => i.CategoryId)
+    </div>
+    <br />
+    <div align="center">
+        <button type="submit" class="btn" style="width:75px">Add </button>
+        <a href="/Admin/Product_Management" class="btn" style="width:75px">Cancel</a>
+    </div>
+}
